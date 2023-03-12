@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: car-api.anycompany.com
+    http:
+      paths:
+      - backend:
+          serviceName: car-svc
+          servicePort: 80
