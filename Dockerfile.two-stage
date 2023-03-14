@@ -15,4 +15,5 @@ ENV APP_HOME=/root/dev/app
 WORKDIR $APP_HOME
 COPY --from=BUILD_IMAGE $APP_HOME/app.jar .
 EXPOSE 8080
+USER 1000
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar ${APP_HOME}/app.jar"]
