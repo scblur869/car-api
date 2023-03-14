@@ -23,7 +23,32 @@ JSON post raw body for /new-car
  ### deploy to kubernetes via kubectl
  ### manifests are located in the '/k8s' folder
  ### read them for more info on the container as
+## buiding the container
+### clone the repo
+```console
+  git clone https://github.com/scblur869/car-api.git
+```
+### build the container
+```console
+  cd car-api
+  docker build --tag mycarapi . --no-cache
+```
+### view the images in docker
+```console
+  docker images
+```
+### run the container interactive console
+```console
+  docker run -it -p 8080:8080 --name myapi mycarapi:latest
+```
+### run the container detatched
+```console
+  docker run -itd -p 8080:8080 --name myapi mycarapi:latest
+```
+
+
  * build the docker image
+* 
  * login to aws via:
  ```console
    $(aws ecr get-login --no-include-email --region eu-central-1)
