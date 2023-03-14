@@ -46,12 +46,10 @@ JSON post raw body for /new-car
   docker run -itd -p 8080:8080 --name myapi mycarapi:latest
 ```
 
-
- * build the docker image
-* 
+## deploy to AWS ECR 
  * login to aws via:
  ```console
-   $(aws ecr get-login --no-include-email --region eu-central-1)
+   $(aws ecr get-login --no-include-email --region us-east-1)
  ```
  * change the region above to match your own
  * create your ECR repo and follow the push commands to push your image to ECR
