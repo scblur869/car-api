@@ -62,7 +62,15 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
  docker run -d --rm -p 8080:8080 --name myapi mycarapi:latest
  ```
 
-### to test this
+### viewing the container running status
+```console
+docker ps
+
+CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS                    NAMES
+cf3e96211cc7   mycarapi   "sh -c 'java ${JAVA_…"   2 seconds ago   Up 2 seconds   0.0.0.0:8080->8080/tcp   myapi
+  ```
+
+### to test the running container
 http://localhost:8080/cars/list
 
 ## push to a registry and deploy to EKS / kubernetes
