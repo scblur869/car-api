@@ -93,6 +93,12 @@ cars loaded!
 ### to test the running container
 http://localhost:8080/cars/list
 
+### stopping the container
+```console
+docker stop myapi
+  ```
+
+
 ## push to a registry and deploy to EKS / kubernetes
 ### deploy to AWS ECR (you must provide your AWS account id and repo name for the ecr endpoint!)
  * docker login to aws ecr via:
