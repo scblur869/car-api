@@ -4,9 +4,9 @@
 endpoints
 
 ```java
- @GetMapping("/list")
- @GetMapping("/by-year/{year}")
- @GetMapping("/by-model/{model}")
+ @GetMapping("/cars/list")
+ @GetMapping("/cars/by-year/{year}")
+ @GetMapping("/cars/by-model/{model}")
  @PostMapping(path = "/new-car", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
 ```
 JSON post raw body for /new-car
@@ -28,19 +28,18 @@ JSON post raw body for /new-car
 ### clone the repo
 ```console
   git clone https://github.com/scblur869/car-api.git
-```
+  ```
 ### build the container
 ```console
   cd car-api
   docker build --tag mycarapi . --no-cache
-```
+  ```
 ### view the images in docker
 ```console
 docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 mycarapi       latest    1ebb45f2e0b1   5 seconds ago   386MB
-
 ```
 
 ### two stage build
@@ -51,46 +50,39 @@ docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 2stage-myapi   latest    4424f99b0240   2 days ago      144MB
-
 ```
 
 ### run the container as an interactive pseudo-TTY to validate image startup
 - meant more for testing or interactive stdin session
 ```console
   docker run -it -p 8080:8080 --name myapi mycarapi:latest
-```
+  ```
 ### runs the container detatched and removes it when it terminates
 - detached works well for normal deployments
 ```console
  docker run -d --rm -p 8080:8080 --name myapi mycarapi:latest
-```
+ ```
 
-## deploy to AWS ECR (you must provide your AWS account id and repo name for the ecr endpoint!)
- * login to aws via:
+### to test this
+http://localhost:8080/cars/list
+
+## push to a registry and deploy to EKS / kubernetes
+### deploy to AWS ECR (you must provide your AWS account id and repo name for the ecr endpoint!)
+ * docker login to aws ecr via:
  ```console
   aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
-```
-
+  ```
+### tag and push to ecr
+```console
   docker tag myapi:latest aws_account_id.dkr.ecr.region.amazonaws.com/myapi:latest
   docker push aws_account_id.dkr.ecr.region.amazonaws.com/myapi:latest
+  ```
 
- ```
- * change the region above to match your own
- * create your ECR repo and follow the push commands to push your image to ECR
- * change the image path in the deployment.yaml to reflect your ecr repo url
- * change the rules - hosts: entry to match your route53 CNAME record
- * port 80 is the default port for accessing the url
-
-
-### good reference
-https://docs.docker.com/engine/reference/run/
-
-
-## Kubernetes deployment requirements to deploy
+### Kubernetes deployment requirements to deploy
 - need to have access to kubernetes and kubectl
-- need to update the deployment.yaml with a valid docker registry endpoint
+- need to update the deployment.yaml with a valid docker image path (ECR endpoint in previous step)
 - need to have an ingress controller installed on EKS / Kubernetes (NGINX, HAPROXY, TRAEFIK, AWS)
-- need to add an A ALIAS record (route53) that matches your ingress resource host  and the A record / dns name of the loadbalancer
+- need to add an A ALIAS record (route53) that matches your ingress resource host  and the A record / dns name of the load balancer (nlb /alb)
 
  example install
  ```console
@@ -105,4 +97,8 @@ https://docs.docker.com/engine/reference/run/
  ```console
  kubectl -n car apply -f ingress.yaml
  ```
-### the last line assumes you have a dedicated nginx-ingress controller listening for state changes
+### the last line assumes you have a dedicated nginx-ingress controller listening for an ingress resource
+
+
+## good reference on docker run
+https://docs.docker.com/engine/reference/run/
