@@ -60,7 +60,7 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 ```
 ### run the container detatched
 ```console
-  docker run -itd -p 8080:8080 --name myapi mycarapi:latest
+  docker run -d -p 8080:8080 --name myapi mycarapi:latest
 ```
 
 ## deploy to AWS ECR 
