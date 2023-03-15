@@ -20,22 +20,20 @@ JSON post raw body for /new-car
 "year": "2019"
 }
  ```
-## Running the API
- ### deploy to kubernetes via kubectl
- ### manifests are located in the '/k8s' folder
- ### read them for more info on the container as
+## Running the API as a container
 
 ## example single and two-stage build of the container
-### clone the repo
+### clone this repo
 ```console
   git clone https://github.com/scblur869/car-api.git
   ```
-### build the container
+## build the container locally using docker:
+### (single stage) --single build, larger image size
 ```console
   cd car-api
   docker build --tag mycarapi . --no-cache
   ```
-### view the images in docker
+### view the image in docker
 ```console
 docker images
 
@@ -43,7 +41,7 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 mycarapi       latest    1ebb45f2e0b1   5 seconds ago   386MB
   ```
 
-### two stage build
+### (two stage) --smaller and more lean image size, enough to run the app only
 ### notice the image size difference as compared to the single stage above
 ```console
 docker build -f Dockerfile.two-stage --tag 2stage-myapi . --no-cache
