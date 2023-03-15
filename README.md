@@ -70,6 +70,28 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS       
 cf3e96211cc7   mycarapi   "sh -c 'java ${JAVA_…"   2 seconds ago   Up 2 seconds   0.0.0.0:8080->8080/tcp   myapi
   ```
 
+### view the container stdout logs
+```console
+docker logs myapi
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.3.RELEASE)
+
+2023-03-15 15:44:38.026  INFO 1 --- [           main] com....
+...
+...
+2023-03-15 15:44:40.302  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-03-15 15:44:40.456  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-15 15:44:40.457  INFO 1 --- [           main] com.app.baseapi.BaseApiApplication       : Started BaseApiApplication in 2.844 seconds (JVM running for 3.185)
+cars loaded!
+  ```
+
+
 ### to test the running container
 http://localhost:8080/cars/list
 
