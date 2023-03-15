@@ -55,18 +55,25 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 ```
 
 ### run the container as an interactive pseudo-TTY to validate image startup
+- meant more for testing or interactive stdin session
 ```console
   docker run -it -p 8080:8080 --name myapi mycarapi:latest
 ```
-### run the container detatched and removes it when it stops
+### runs the container detatched and removes it when it terminates
+- detached works well for normal deployments
 ```console
  docker run -d --rm -p 8080:8080 --name myapi mycarapi:latest
 ```
 
-## deploy to AWS ECR 
+## deploy to AWS ECR (you must provide your AWS account id and repo name for the ecr endpoint!)
  * login to aws via:
  ```console
   aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
+```
+
+  docker tag myapi:latest aws_account_id.dkr.ecr.region.amazonaws.com/myapi:latest
+  docker push aws_account_id.dkr.ecr.region.amazonaws.com/myapi:latest
+
  ```
  * change the region above to match your own
  * create your ECR repo and follow the push commands to push your image to ECR
@@ -83,7 +90,7 @@ https://docs.docker.com/engine/reference/run/
 - need to have access to kubernetes and kubectl
 - need to update the deployment.yaml with a valid docker registry endpoint
 - need to have an ingress controller installed on EKS / Kubernetes (NGINX, HAPROXY, TRAEFIK, AWS)
-- need to add an A ALIAS record for that matches your ingress resource host and the dns name of the loadbalancer
+- need to add an A ALIAS record (route53) that matches your ingress resource host  and the A record / dns name of the loadbalancer
 
  example install
  ```console
@@ -99,4 +106,3 @@ https://docs.docker.com/engine/reference/run/
  kubectl -n car apply -f ingress.yaml
  ```
 ### the last line assumes you have a dedicated nginx-ingress controller listening for state changes
-### you will also need to create a route53 CNAME record and point that to your ingress controller A Record
