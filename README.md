@@ -1,14 +1,15 @@
 # Car API based on spring-boot
   * uses h2 to store 1000 records of vehicle data
+  * mock vehicle data is included /src/main/resources/cars.json
 
-endpoints
-
+### endpoints
 ```java
  @GetMapping("/cars/list")
  @GetMapping("/cars/by-year/{year}")
  @GetMapping("/cars/by-model/{model}")
  @PostMapping(path = "/new-car", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/json")
-```
+ ```
+
 JSON post raw body for /new-car
  ```json
 {
@@ -40,7 +41,7 @@ docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 mycarapi       latest    1ebb45f2e0b1   5 seconds ago   386MB
-```
+  ```
 
 ### two stage build
 ### notice the image size difference as compared to the single stage above
@@ -50,7 +51,7 @@ docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 2stage-myapi   latest    4424f99b0240   2 days ago      144MB
-```
+  ```
 
 ### run the container as an interactive pseudo-TTY to validate image startup
 - meant more for testing or interactive stdin session
