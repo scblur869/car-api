@@ -29,50 +29,56 @@ JSON post raw body for /new-car
   ```
 ## build the container locally using docker:
 ### (single stage) --single build, larger image size
+  - would not do in a deployment. only for local developer builds
+  - just meant to show the lazy dev way :-)
 ```console
   cd car-api
-  docker build --tag mycarapi . --no-cache
+  docker build -f Dockerfile.dev --tag dev-api . --no-cache
   ```
 ### view the image in docker
 ```console
 docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
-mycarapi       latest    1ebb45f2e0b1   5 seconds ago   386MB
+dev-api      latest    31bc0fec47fb    2 days ago       268MB
   ```
 
 ### (two stage) --smaller and more lean image size, enough to run the app only
 ### notice the image size difference as compared to the single stage above
+ - this should be the method for deployment (dev,test,prod)
 ```console
-docker build -f Dockerfile.two-stage --tag 2stage-myapi . --no-cache
+docker build -f Dockerfile --tag myapi . --no-cache
 docker images
 
 REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
-2stage-myapi   latest    4424f99b0240   2 days ago      144MB
+myapi        latest    4424f99b0240    2 days ago        144MB
   ```
 
 ### run the container as an interactive pseudo-TTY to validate image startup
 - meant more for testing or interactive stdin session
 ```console
-  docker run -it -p 8080:8080 --name myapi mycarapi:latest
+  docker run -it -p 8080:8080 --name car-api myapi:latest
   ```
 ### runs the container detatched and removes it when it terminates
 - detached works well for normal deployments
 ```console
- docker run -d --rm -p 8080:8080 --name myapi mycarapi:latest
+(base) ➜  car-api git:(main) ✗ docker run -d --rm --name car-api myapi:latest           
+835f18b2996189e1e626eba916ca51883d4f9948823e2ec5532a87af89631f59
  ```
 
 ### viewing the container running status
 ```console
-docker ps
 
-CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS         PORTS                    NAMES
-cf3e96211cc7   mycarapi   "sh -c 'java ${JAVA_…"   2 seconds ago   Up 2 seconds   0.0.0.0:8080->8080/tcp   myapi
+(base) ➜  car-api git:(main) ✗ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        PORTS      NAMES
+835f18b29961   myapi     "sh -c 'java ${JAVA_…"   2 seconds ago   Up 1 second   8080/tcp   car-api
+(base) ➜  car-api git:(main) ✗ 
   ```
 
+
 ### view the container stdout logs
-```console
-docker logs myapi
+```bash
+docker logs car-api
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -95,7 +101,7 @@ http://localhost:8080/cars/list
 
 ### stopping the container
 ```console
-docker stop myapi
+docker stop car-api
   ```
 
 
