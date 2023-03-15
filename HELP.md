@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.bmw.base-api' is invalid and this project uses 'com.bmw.baseapi' instead.
+* The original package name 'com.app.base-api' is invalid and this project uses 'com.app.baseapi' instead.
 
 # Getting Started
 
