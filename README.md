@@ -54,19 +54,19 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
 
 ```
 
-### run the container interactive console
+### run the container as an interactive pseudo-TTY to validate image startup
 ```console
   docker run -it -p 8080:8080 --name myapi mycarapi:latest
 ```
-### run the container detatched
+### run the container detatched and removes it when it stops
 ```console
-  docker run -d -p 8080:8080 --name myapi mycarapi:latest
+ docker run -d --rm -p 8080:8080 --name myapi mycarapi:latest
 ```
 
 ## deploy to AWS ECR 
  * login to aws via:
  ```console
-   $(aws ecr get-login --no-include-email --region us-east-1)
+  aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
  ```
  * change the region above to match your own
  * create your ECR repo and follow the push commands to push your image to ECR
@@ -74,6 +74,16 @@ REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
  * change the rules - hosts: entry to match your route53 CNAME record
  * port 80 is the default port for accessing the url
 
+
+### good reference
+https://docs.docker.com/engine/reference/run/
+
+
+## Kubernetes deployment requirements to deploy
+- need to have access to kubernetes and kubectl
+- need to update the deployment.yaml with a valid docker registry endpoint
+- need to have an ingress controller installed on EKS / Kubernetes (NGINX, HAPROXY, TRAEFIK, AWS)
+- need to add an A ALIAS record for that matches your ingress resource host and the dns name of the loadbalancer
 
  example install
  ```console
