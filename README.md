@@ -35,8 +35,23 @@ JSON post raw body for /new-car
 ```
 ### view the images in docker
 ```console
-  docker images
+docker images
+
+REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
+mycarapi       latest    1ebb45f2e0b1   5 seconds ago   386MB
+
 ```
+
+### two stage build
+```console
+docker build -f Dockerfile.two-stage --tag 2stage-myapi .
+docker images
+
+REPOSITORY     TAG       IMAGE ID       CREATED         SIZE
+2stage-myapi   latest    4424f99b0240   2 days ago      144MB
+
+```
+
 ### run the container interactive console
 ```console
   docker run -it -p 8080:8080 --name myapi mycarapi:latest
