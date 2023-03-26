@@ -1,7 +1,10 @@
 # Car API based on spring-boot
   * uses h2 to store 1000 records of vehicle data
   * mock vehicle data is included /src/main/resources/cars.json
-
+  * getting the docker image (docker hub)
+  ```console
+   docker pull springfieldm14/car-api
+   ```
 ### endpoints
 ```java
  @GetMapping("/cars/list")

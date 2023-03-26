@@ -16,6 +16,6 @@ spec:
       containers:
       - name: car-api
         imagePullPolicy: Always
-        image: 237703xxxxx.dkr.ecr.us-east-1.amazonaws.com/-car-api:latest
+        image: springfieldm14/car-api:latest
         ports:
         - containerPort: 8080
