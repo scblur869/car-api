@@ -1,7 +1,7 @@
 # Car API based on spring-boot
   * uses h2 to store 1000 records of vehicle data
   * mock vehicle data is included /src/main/resources/cars.json
-  * getting the docker image (docker hub)
+  * getting the pre-built docker image (docker hub)
   ```console
    docker pull springfieldm14/car-api
    ```
@@ -23,7 +23,7 @@ JSON post raw body for /new-car
 "year": "2019"
 }
  ```
-## Running the API as a container
+## Building and Running the API as a container
 
 ## example single and two-stage build of the container
 ### clone this repo
@@ -123,8 +123,8 @@ docker stop car-api
 ### Kubernetes deployment requirements to deploy
 - need to have access to kubernetes and kubectl
 - need to update the deployment.yaml with a valid docker image path (ECR endpoint in previous step)
-- need to have an ingress controller installed on EKS / Kubernetes (NGINX, HAPROXY, TRAEFIK, AWS)
-- need to add an A ALIAS record (route53) that matches your ingress resource host  and the A record / dns name of the load balancer (nlb /alb)
+- need to have an ingress controller installed on EKS / Kubernetes (NGINX, HAPROXY, TRAEFIK, AWS) **see INGRESS.md**
+- need to add an A ALIAS record (route53) that matches your ingress resource host  and the A record / dns name of the load balancer (nlb /alb) **See INGRESS.md**
 
  example install
  ```console
